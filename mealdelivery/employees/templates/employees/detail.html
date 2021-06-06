@@ -1,0 +1,8 @@
+<a href="{% url 'employees-index' %}">Employees list</a>
+
+<h1># {{employee.id}}</h1>
+<h2>Name: {{employee.name}}</h2>
+<p>Slack webhook url: {{employee.slack_webhook_url}}</p>
+
+<a href="{% url 'employee-delete' employee.id %}">erase</a>
+<a href="{% url 'employee-update' employee.id %}">update</a>

@@ -1,0 +1,14 @@
+<h1># {{menu.id}}</h1>
+<h2>created: {{menu.created}}</h2>
+<p>Recordatory: {{menu.active|yesno:"active,not active"}}</p>
+<a href="{% url 'option-create' menu.id %}">Add option</a>
+
+<ul>
+    {% for option in menu.related_options %}
+        <li>
+            {{option.name}} 
+            <a href="{% url 'option-delete' menu.id option.id %}">erase</a>
+            <a href="{% url 'option-update' menu.id option.id %}">update</a>
+        </li>
+    {% endfor %}
+    </ul>

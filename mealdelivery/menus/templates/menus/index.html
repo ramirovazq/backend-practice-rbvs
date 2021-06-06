@@ -1,0 +1,9 @@
+<h1>Menu list</h1>
+<a href="{% url 'menu-create' %}">Create menu</a>
+<ul>
+{% for menu in menus %}
+    <li>
+        <a href="{% url 'menu-detail' menu.id %}">{{menu.id}}</a> {{menu.created}} {{menu.active}}
+    </li>
+{% endfor %}
+</ul>

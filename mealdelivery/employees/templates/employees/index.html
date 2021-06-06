@@ -1,0 +1,9 @@
+<h1>Employees list</h1>
+<a href="{% url 'employee-create' %}">Create employee</a>
+<ul>
+{% for employee in employees %}
+    <li>
+        <a href="{% url 'employee-detail' employee.id %}">{{employee.id}}</a> {{employee.name}}
+    </li>
+{% endfor %}
+</ul>

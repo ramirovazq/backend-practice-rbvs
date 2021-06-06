@@ -5,7 +5,7 @@ description = ""
 authors = ["Ramiro Baltazar Vazquez Sanchez <ramirovazquez95@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 django = "^3.2.3"
 
 [tool.poetry.dev-dependencies]

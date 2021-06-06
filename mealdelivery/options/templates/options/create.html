@@ -1,0 +1,9 @@
+<h1># {{menu.id}}</h1>
+<h2>created: {{menu.created}}</h2>
+<p>Recordatory: {{menu.active|yesno:"active,not active"}}</p>
+
+<form action="{% url 'option-create' menu.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Guardar">
+</form>

@@ -1,22 +1,22 @@
 from django.db import models
+from django.shortcuts import reverse
 
 class Menu(models.Model):
     created = models.DateField(
         auto_now_add=True,
-        unique=True
     )
     active = models.BooleanField(
         default=False
     )
 
-class Option(models.Model):
-    option = models.CharField(
-            blank=True,
-            null=True,
-            max_length=100,
-    )
-    menu = models.ForeignKey(
-        Menu,
-        on_delete=models.PROTECT,
-        db_index=True)
+    def get_absolute_url(self):
+        return reverse('menu-detail', kwargs={'pk': self.pk})
 
+    def related_options(self):
+        from options.models import Option
+        return Option.objects.filter(menu=self).order_by('-created')
+
+
+
+    def __str__(self):
+        return f"Id {self.id}, {self.created.strftime('%d/%m/%Y')}" 
