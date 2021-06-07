@@ -54,3 +54,6 @@ $ redis-cli ping
 ```sh
 (.venv)$ celery --app mealdelivery worker -l info
 ```
+
+## Some details
+https://docs.google.com/document/d/1ASSYFKRqQSlhZOcgDeVvS7T8Q4lsExAu9QtS23a9LWY/edit?usp=sharing
