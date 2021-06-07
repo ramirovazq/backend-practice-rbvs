@@ -9,5 +9,5 @@ greater_time = greater.time()
 reference_time = reference.time()
 minor_time = minor.time()
 
-assert not(greater_time < reference_time), "Something wrong"
+assert not (greater_time < reference_time), "Something wrong"
 assert minor_time < reference_time, "Something wrong"

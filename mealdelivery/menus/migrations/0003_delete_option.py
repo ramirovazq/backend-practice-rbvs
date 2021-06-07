@@ -6,11 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('menus', '0002_alter_menu_created'),
+        ("menus", "0002_alter_menu_created"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='Option',
+            name="Option",
         ),
     ]
