@@ -55,7 +55,7 @@ class MenuTestCase(TestCase):
     def test_active_menu_success(self):
         self.assertTrue(self.menu1.active == False) # Initial condiction inactive
         included_str = f"Recordatory: active".encode("utf-8")
-        response = self.client.post(reverse('menu-update', kwargs={'pk': self.menu1.id}), {'active': True}, follow=True)
+        response = self.client.post(reverse('menu-update', kwargs={'pk': self.menu1.id}), {'active': True, "date_menu": "09/08/2021"}, follow=True)
         self.assertTrue(included_str in response.content)
 
 

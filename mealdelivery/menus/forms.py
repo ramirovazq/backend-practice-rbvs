@@ -4,4 +4,4 @@ from .models import Menu
 class MenuForm(ModelForm):
     class Meta:
         model = Menu
-        fields = ('created', 'active',)
+        fields = ('date_menu', 'active',)

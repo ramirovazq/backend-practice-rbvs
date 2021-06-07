@@ -4,6 +4,8 @@ from options.models import EmployeeOption, Option
 from employees.models import Employee
 from django.views import generic
 from options.forms import EmployeeOptionForm
+from .forms import MenuForm
+from notifications.tasks import send_menu_via_slack
 
 class IndexView(generic.ListView):
     template_name = 'menus/index.html'
@@ -16,17 +18,10 @@ class DetailView(generic.DetailView):
     model = Menu
     template_name = 'menus/detail.html'
 
-def create(request):
-    context = {}
-    menu = Menu.objects.create()
-    context['menu'] = menu
-    return redirect('menu-detail', pk=menu.id)
-
 class MenuCreateView(generic.CreateView):
     model = Menu
     fields = ['date_menu']
     template_name = 'menus/form.html'
-
 
 class MenuUpdateView(generic.edit.UpdateView):
     model = Menu
@@ -61,3 +56,17 @@ def menu_delete_option(request, uuid, employee_option_id):
     employee_option = get_object_or_404(EmployeeOption, id=employee_option_id)
     employee_option.delete()
     return redirect('menu-link', uuid=menulink.url_uuid)
+
+def menu_update(request, pk):
+    menu = get_object_or_404(Menu, pk=pk)
+
+    if request.method == 'POST':
+        form = MenuForm(request.POST, instance=menu)
+        if form.is_valid():
+            form.save()
+            send_menu_via_slack.delay(menu.id)
+            return redirect('menu-detail', pk=menu.id)
+    else:
+        form = MenuForm(instance=menu)
+
+    return render(request, "menus/update.html", context={'form': form, 'menu': menu})

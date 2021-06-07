@@ -11,14 +11,6 @@ app = Celery('mealdelivery')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
-app.conf.beat_schedule = {
-    'add-every-10-seconds': {
-        'task': 'add',
-        'schedule': 50.0,
-        'args': (23, 23)
-    },
-}
-
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
