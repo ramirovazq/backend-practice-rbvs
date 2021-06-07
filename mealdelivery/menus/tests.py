@@ -3,7 +3,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.urls.conf import include
 from menus.models import Menu, MenuLinkperEmployee
-from options.models import Option
+from options.models import Option, EmployeeOption
 from employees.models import Employee
 
 class MenuTestCase(TestCase):
@@ -90,7 +90,30 @@ class MenuLinkperEmployeeTest(TestCase):
         menu_link = MenuLinkperEmployee(menu=self.menu, employee=self.employee1)
         menu_link.save()
 
-        response = self.client.get(reverse('menu-select-option', kwargs={'uuid': menu_link.url_uuid, 'option_id':self.option2.id}), follow=True)
-        print(response.status_code)
-        print("ping !")
-        print(response.content)
+        response = self.client.post(reverse('menu-select-option', kwargs={'uuid': menu_link.url_uuid, 'option_id':self.option2.id}), 
+            {'specification': "Sin cebolla", 
+             'menu':menu_link.menu.id, 
+             'employee': menu_link.employee.id, 
+             'option_selected': self.option2.id}, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(EmployeeOption.objects.all().count(), 1)
+
+    def test_employee_delete_option(self):
+        menu_link = MenuLinkperEmployee(menu=self.menu, employee=self.employee1)
+        menu_link.save()
+
+        # first employee select and option
+        response = self.client.post(reverse('menu-select-option', kwargs={'uuid': menu_link.url_uuid, 'option_id':self.option2.id}), 
+            {'specification': "Sin cebolla", 
+             'menu':menu_link.menu.id, 
+             'employee': menu_link.employee.id, 
+             'option_selected': self.option2.id}, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(EmployeeOption.objects.all().count(), 1)
+
+        employee_option = EmployeeOption.objects.all()[0]
+
+        # second employee delet option
+        response = self.client.get(reverse('menu-delete-option', kwargs={'uuid': menu_link.url_uuid, 'employee_option_id':employee_option.id}), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(EmployeeOption.objects.all().count(), 0)
