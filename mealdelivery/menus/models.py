@@ -22,6 +22,10 @@ class Menu(models.Model):
         from options.models import Option
         return Option.objects.filter(menu=self).order_by('-created')
 
+    def employees_have_selected(self):
+        from options.models import EmployeeOption
+        return EmployeeOption.objects.filter(menu=self).order_by('employee')
+
 
 
     def __str__(self):

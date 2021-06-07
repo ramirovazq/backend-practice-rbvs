@@ -13,4 +13,20 @@
             <a href="{% url 'option-update' menu.id option.id %}">update</a>
         </li>
     {% endfor %}
+</ul>
+
+<hr>
+<h3>Employees requests</h3>
+
+    {% for employee_option in menu.employees_have_selected %}
+    <h4>{{employee_option.employee.name}} </h4>
+    <ul>
+        <li>
+            {{employee_option.option_selected.name}}
+        </li>
+        <li>
+            Specification: {{employee_option.specification}} 
+        </li>
+
     </ul>
+    {% endfor %}
