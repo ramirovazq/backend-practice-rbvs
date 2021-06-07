@@ -20,7 +20,6 @@ class EmployeeTestCase(TestCase):
             slack_webhook_url="http://www.mealdelivery.test/maria"
         )
 
-
         # Init Client
         self.client = Client()
         self.client.force_login(self.user)
@@ -59,11 +58,3 @@ class EmployeeTestCase(TestCase):
         included_str = f"<h2>Name: Armando Gomez</h2>".encode("utf-8")
         response = self.client.get(reverse('employee-detail', kwargs={'pk': self.employee2.id}))
         self.assertTrue(included_str in response.content)
-
-    '''
-    def test_delete_employee_success(self):
-        response = self.client.post(reverse('employee-delete'),  follow=True)
-        number_employees = Employee.objects.all().count()
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(number_employees, 3)
-    '''
