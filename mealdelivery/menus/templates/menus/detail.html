@@ -1,5 +1,6 @@
 <h1># {{menu.id}}</h1>
-<h2>created: {{menu.created}}</h2>
+<h2>Date: {{menu.date_menu}}</h2>
+<h3>created: {{menu.created}}</h3>
 <p>Recordatory: {{menu.active|yesno:"active,not active"}}</p>
 <a href="{% url 'option-create' menu.id %}">Add option</a>
 

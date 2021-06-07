@@ -3,7 +3,7 @@
 <ul>
 {% for menu in menus %}
     <li>
-        <a href="{% url 'menu-detail' menu.id %}">{{menu.id}}</a> {{menu.created}} {{menu.active}}
+        Id <a href="{% url 'menu-detail' menu.id %}">{{menu.id}}</a> Menu date: {{menu.date_menu}} created {{menu.created}} {{menu.active}}
     </li>
 {% endfor %}
 </ul>

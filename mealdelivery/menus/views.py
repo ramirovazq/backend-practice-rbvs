@@ -10,7 +10,7 @@ class IndexView(generic.ListView):
     context_object_name = 'menus'
 
     def get_queryset(self):
-        return Menu.objects.order_by('-created')
+        return Menu.objects.order_by('-id')
 
 class DetailView(generic.DetailView):
     model = Menu
@@ -21,6 +21,12 @@ def create(request):
     menu = Menu.objects.create()
     context['menu'] = menu
     return redirect('menu-detail', pk=menu.id)
+
+class MenuCreateView(generic.CreateView):
+    model = Menu
+    fields = ['date_menu']
+    template_name = 'menus/form.html'
+
 
 class MenuUpdateView(generic.edit.UpdateView):
     model = Menu

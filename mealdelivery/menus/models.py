@@ -7,6 +7,10 @@ class Menu(models.Model):
     created = models.DateField(
         auto_now_add=True,
     )
+    date_menu = models.DateField(
+        blank=False,
+        null=False
+    )
     active = models.BooleanField(
         default=False
     )

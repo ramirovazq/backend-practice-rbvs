@@ -5,6 +5,7 @@ from django.urls.conf import include
 from menus.models import Menu, MenuLinkperEmployee
 from options.models import Option, EmployeeOption
 from employees.models import Employee
+import datetime
 
 class MenuTestCase(TestCase):
 
@@ -13,9 +14,12 @@ class MenuTestCase(TestCase):
         self.user = User.objects.create_user(
             username='staff', email='staff@example.com', password='secret')
 
+        self.date1 = datetime.date(2021, 9, 8) # year month day
+        self.date2 = datetime.date(2021, 10, 20)
+
         # Create two menus
-        self.menu1 = Menu.objects.create()
-        self.menu2 = Menu.objects.create()
+        self.menu1 = Menu.objects.create(date_menu=self.date1)
+        self.menu2 = Menu.objects.create(date_menu=self.date2)
 
         # Init Client
         self.client = Client()
@@ -39,7 +43,9 @@ class MenuTestCase(TestCase):
 
 
     def test_create_menu_success(self):
-        response = self.client.get(reverse('menu-create'), follow=True)
+        response = self.client.post(reverse('menu-create'), 
+            {'date_menu': self.date1}, follow=True)
+
         number_menus = Menu.objects.all().count()
 
         self.assertEqual(response.status_code, 200)
@@ -60,8 +66,10 @@ class MenuLinkperEmployeeTest(TestCase):
         self.user = User.objects.create_user(
             username='staff', email='staff@example.com', password='secret')
 
+        self.date1 = datetime.date(2021, 9, 8) # year month day
+
         # Create menu
-        self.menu = Menu.objects.create()
+        self.menu = Menu.objects.create(date_menu=self.date1)
         self.option1 = Option.objects.create(name="Hamburguesa", menu=self.menu)
         self.option2 = Option.objects.create(name="Pizza", menu=self.menu)
         self.option3 = Option.objects.create(name="Ensalada", menu=self.menu)
