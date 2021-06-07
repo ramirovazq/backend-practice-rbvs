@@ -46,7 +46,9 @@ class EmployeeOption(models.Model):
         blank=True,
         null=True
     )
-
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
 
     def __str__(self):
         return f"{self.menu} {self.employee} {self.option_selected}"
