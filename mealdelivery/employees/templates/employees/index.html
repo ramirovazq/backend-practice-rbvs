@@ -3,7 +3,7 @@
 <ul>
 {% for employee in employees %}
     <li>
-        <a href="{% url 'employee-detail' employee.id %}">{{employee.id}}</a> {{employee.name}}
+        <a href="{% url 'employee-detail' employee.id %}">{{employee.id}}</a> {{employee.name}} {{employee.slack_webhook_url}}
     </li>
 {% endfor %}
 </ul>
