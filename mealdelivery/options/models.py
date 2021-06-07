@@ -1,6 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from menus.models import Menu
+from employees.models import Employee
 
 class Option(models.Model):
     name = models.CharField(
@@ -24,3 +25,28 @@ class Option(models.Model):
     def __str__(self):
         return f"{self.menu}: {self.name}" 
 
+
+class EmployeeOption(models.Model):
+    menu = models.ForeignKey(
+        Menu,
+        on_delete=models.PROTECT,
+        db_index=True
+    )
+    employee = models.ForeignKey(
+        Employee,
+        on_delete=models.PROTECT,
+        db_index=True
+    )
+    option_selected = models.ForeignKey(
+        Option,
+        on_delete=models.PROTECT,
+        db_index=True
+    )
+    specification = models.TextField(
+        blank=True,
+        null=True
+    )
+
+
+    def __str__(self):
+        return f"{self.menu} {self.employee} {self.option_selected}"

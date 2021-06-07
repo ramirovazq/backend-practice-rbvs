@@ -1,0 +1,10 @@
+<h1>Hello {{menulink.employee.name}}</h1>
+<h2>Menu date: {{menulink.menu.created}}</h2>
+
+<h2>Option to add: {{option.name}}</h2>
+
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Guardar">
+</form>

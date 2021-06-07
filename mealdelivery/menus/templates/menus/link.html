@@ -1,0 +1,20 @@
+<h1>Hello {{menulink.employee.name}}</h1>
+<h2>Menu date: {{menulink.menu.created}}</h2>
+
+<h2>Options</h2>
+<ul>
+    {% for option in menulink.menu.related_options %}
+        <li>
+            {{option.name}} <a href="{% url 'menu-select-option' menulink.url_uuid option.id %}">select</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<h2>Options Selected</h2>
+<ul>
+    {% for option in menulink.options_selected %}
+        <li>
+            {{option.option_selected.name}} Specification: {{option.specification|default:"nothing" }} <a href="{% url 'menu-delete-option' menulink.url_uuid option.id %}">erase</a>
+        </li>
+    {% endfor %}
+</ul>
