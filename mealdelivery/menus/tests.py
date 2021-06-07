@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.urls.conf import include
+from unittest.mock import patch
 from menus.models import Menu, MenuLinkperEmployee
 from options.models import Option, EmployeeOption
 from employees.models import Employee
@@ -52,10 +53,12 @@ class MenuTestCase(TestCase):
         self.assertEqual(number_menus, 3)
 
 
-    def test_active_menu_success(self):
+    @patch('menus.views.send_menu_via_slack')
+    def test_active_menu_success(self, mock_send_menu):
         self.assertTrue(self.menu1.active == False) # Initial condiction inactive
         included_str = f"Recordatory: active".encode("utf-8")
         response = self.client.post(reverse('menu-update', kwargs={'pk': self.menu1.id}), {'active': True, "date_menu": "09/08/2021"}, follow=True)
+        mock_send_menu.delay.assert_called_with(self.menu1.id)
         self.assertTrue(included_str in response.content)
 
 
